@@ -40,6 +40,20 @@ resource "aws_instance" "example" {
   }
 }
 
+resource "aws_eks_cluster" "aws_cluster" {
+  name     = "my-cluster"
+  role_arn = "arn:aws:iam::123456789012:role/eks-service-role-AWSServiceRoleForAmazonEKS-74d3c911-af7b-4b3e-bf7d-1f5d6b6e1ef3"
+  version  = "1.14"
+  vpc_config {
+    subnet_ids = ["subnet-0e8f3d6b1b4b4b1b4", "subnet-0e8f3d6b1b4b4b1b4"]
+  }
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t4.micro"
+}
+
 output "PublicIP" {
   value = aws_instance.example.public_ip
 }
